@@ -120,7 +120,26 @@ public class TextEditor implements ActionListener {
 		if(e.getSource() == this.exit) {
 			System.exit(0);
 		}
+		
+		
+		//save as
 		if(e.getSource() == this.saveAs) {
+			JFileChooser fChooser = new JFileChooser();
+			fChooser.setCurrentDirectory(new File("."));
+			int response = fChooser.showSaveDialog(null);
+			if(response == JFileChooser.APPROVE_OPTION) {
+				File file = new File(fChooser.getSelectedFile().getAbsolutePath());
+				try {
+					FileOutputStream fo = new FileOutputStream(file);
+					byte b[] = (this.textArea.getText().getBytes());
+					fo.write(b);
+					fo.close();
+				}
+				catch(IOException exception) {
+					JOptionPane.showMessageDialog(null,"File can't be saved");
+				}
+			}
+			
 			
 		}
 		
