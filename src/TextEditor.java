@@ -16,6 +16,8 @@ public class TextEditor implements ActionListener {
 	JMenu menu2 = new JMenu("Theme");// Theme
 	JMenuItem light;
 	JMenuItem dark;
+	JMenuItem classic;
+	JMenuItem def;
 	JMenuItem open;
 	JMenuItem saveAs;
 	JMenuItem exit;
@@ -35,6 +37,8 @@ public class TextEditor implements ActionListener {
 		this.menu2 = new JMenu("Theme");  // Theme
 		this.light = new JMenuItem("Light");
 		this.dark = new JMenuItem("Dark");
+		this.classic = new JMenuItem("Classic");
+		this.def = new JMenuItem("Default");
 		this.open = new JMenuItem("Open");
 		this.saveAs = new JMenuItem("Save As");
 		this.exit = new JMenuItem("Exit");
@@ -43,6 +47,8 @@ public class TextEditor implements ActionListener {
 		this.menu1.add(this.exit);
 		this.menu2.add(this.light);
 		this.menu2.add(this.dark);
+		this.menu2.add(this.classic);
+		this.menu2.add(this.def);
 		
 		this.menuBar.add(menu1);	
 		this.menuBar.add(menu2);
@@ -53,6 +59,9 @@ public class TextEditor implements ActionListener {
 		this.saveAs.addActionListener(this);
 		this.dark.addActionListener(this);
 		this.light.addActionListener(this);
+		this.classic.addActionListener(this);
+		this.def.addActionListener(this);
+		
 		//end of menu bar
 		
 		//textArea
@@ -91,8 +100,8 @@ public class TextEditor implements ActionListener {
 		if(e.getSource() == this.open) {
 			JFileChooser fChooser = new JFileChooser();
 			fChooser.setCurrentDirectory(new File("."));
-			FileNameExtensionFilter extension = new FileNameExtensionFilter("Text Files", "txt");
-			fChooser.setFileFilter(extension);
+			FileNameExtensionFilter extensionFilter = new FileNameExtensionFilter("Text Files", "txt");
+			fChooser.setFileFilter(extensionFilter);
 			
 			int response  = fChooser.showOpenDialog(null);
 
@@ -126,6 +135,8 @@ public class TextEditor implements ActionListener {
 		if(e.getSource() == this.saveAs) {
 			JFileChooser fChooser = new JFileChooser();
 			fChooser.setCurrentDirectory(new File("."));
+			FileNameExtensionFilter extensionFilter = new FileNameExtensionFilter("Text Files", "txt");
+			fChooser.setFileFilter(extensionFilter);
 			int response = fChooser.showSaveDialog(null);
 			if(response == JFileChooser.APPROVE_OPTION) {
 				File file = new File(fChooser.getSelectedFile().getAbsolutePath());
@@ -142,6 +153,48 @@ public class TextEditor implements ActionListener {
 			
 			
 		}
+		
+		
+		if(e.getSource() == this.dark) {
+			try {
+				UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
+				SwingUtilities.updateComponentTreeUI(window);
+			}
+			catch(Exception exception) {
+				JOptionPane.showMessageDialog(null,"Theme can't be changed");
+			}
+		}
+		
+		if(e.getSource() == this.light) {
+			try {
+				UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+				SwingUtilities.updateComponentTreeUI(window);
+			}
+			catch(Exception exception) {
+				JOptionPane.showMessageDialog(null,"Theme can't be changed");
+			}
+		}
+		
+		if(e.getSource() == this.classic) {
+			try {
+				UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+				SwingUtilities.updateComponentTreeUI(window);
+			}
+			catch(Exception exception) {
+				JOptionPane.showMessageDialog(null,"Theme can't be changed");
+			}
+		}
+		
+		if(e.getSource() == this.def) {
+			try {
+				UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel");
+				SwingUtilities.updateComponentTreeUI(window);
+			}
+			catch(Exception exception) {
+				JOptionPane.showMessageDialog(null,"Theme can't be changed");
+			}
+		}
+		
 		
 	}
 }
