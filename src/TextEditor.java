@@ -2,8 +2,12 @@ import java.awt.event.*;
 import java.io.*;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
+
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
+
+
 
 
 public class TextEditor implements ActionListener {
@@ -72,6 +76,8 @@ public class TextEditor implements ActionListener {
 		this.textArea.setVisible(true); 
 		//end of textArea
 		
+		//setting up default font and size
+		this.textArea.setFont(new Font("Arial",Font.PLAIN,25));
 		
 		//scrollPane
 		this.scrollPane = new JScrollPane(this.textArea);
