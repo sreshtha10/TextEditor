@@ -28,7 +28,6 @@ public class TextEditor implements ActionListener {
 	JMenuItem exit;
 	JMenuItem bold;
 	JMenuItem italic;
-	JMenuItem underLine;
 	JLabel fontSelector;
 	JComboBox<String> fontBox;
 	String selectedText;
@@ -56,7 +55,6 @@ public class TextEditor implements ActionListener {
 		this.saveAs = new JMenuItem("Save As");
 		this.exit = new JMenuItem("Exit");
 		this.bold = new JMenuItem("Bold");
-		this.underLine = new JMenuItem("Underline");
 		this.italic  = new JMenuItem("Italic");
 		this.file.add(this.open);
 		this.file.add(this.saveAs);
@@ -67,7 +65,6 @@ public class TextEditor implements ActionListener {
 		this.theme.add(this.def);
 		this.edit.add(this.bold);
 		this.edit.add(this.italic);
-		this.edit.add(this.underLine);
 		this.menuBar.add(file);	
 		this.menuBar.add(theme);
 		this.menuBar.add(edit);
@@ -81,7 +78,6 @@ public class TextEditor implements ActionListener {
 		this.classic.addActionListener(this);
 		this.def.addActionListener(this);
 		this.bold.addActionListener(this);
-		this.underLine.addActionListener(this);
 		this.italic.addActionListener(this);
 		//end of menu bar
 		
@@ -202,24 +198,16 @@ public class TextEditor implements ActionListener {
 		
 		//bold
 		if(e.getSource() == this.bold) {
-			
+			textArea.setFont(new Font(textArea.getFont().getFamily(),Font.BOLD,textArea.getFont().getSize()));
 			
 		}
 		
 		
 		//italic
 		if(e.getSource() == this.italic) {
-			
-			
+			textArea.setFont(new Font(textArea.getFont().getFamily(),Font.ITALIC,textArea.getFont().getSize()));
 		}
 		
-		//underline
-		if(e.getSource() == this.underLine) {
-			
-			
-			
-		}
-	
 		
 		//themes
 		if(e.getSource() == this.dark) {
