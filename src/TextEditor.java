@@ -137,6 +137,23 @@ public class TextEditor implements ActionListener {
 			}
 		});
 		
+		//Adding shortcuts
+		
+		//ctrl+w for exit
+		KeyStroke exitStroke = KeyStroke.getKeyStroke(KeyEvent.VK_W,KeyEvent.CTRL_DOWN_MASK);
+		this.exit.setAccelerator(exitStroke);
+		
+		//ctrl +o for open
+		KeyStroke openStroke = KeyStroke.getKeyStroke(KeyEvent.VK_O,KeyEvent.CTRL_DOWN_MASK);
+		this.open.setAccelerator(openStroke);
+		
+		
+		//ctrl+s for save
+		KeyStroke saveStroke = KeyStroke.getKeyStroke(KeyEvent.VK_S,KeyEvent.CTRL_DOWN_MASK);
+		this.saveAs.setAccelerator(saveStroke);
+		
+		
+		
 		
 		
 		//window (frame)
