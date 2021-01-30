@@ -6,6 +6,8 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 
@@ -30,12 +32,18 @@ public class TextEditor implements ActionListener {
 	JLabel fontSelector;
 	JComboBox<String> fontBox;
 	JButton color;
+	JLabel fontSize;
+	JSpinner fontSpinner;
+	
+	
 	
 	public TextEditor() {
 		// creating the window of the text editor
 		
 		this.window = new JFrame();
-		this.window.setLayout(new FlowLayout());
+		FlowLayout layout  = new FlowLayout();
+		layout.setHgap(20);
+		this.window.setLayout(layout);
 		this.window.setTitle("Text Editor");
 		this.window.setSize(600,650);
 		this.window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -115,13 +123,28 @@ public class TextEditor implements ActionListener {
 		this.color =  new JButton("Font Color");
 		this.color.addActionListener(this);
 		
+		// font size spinner
+		this.fontSize =  new JLabel("Font Size:");
+		this.fontSpinner = new JSpinner();
+		this.fontSpinner.setPreferredSize(new Dimension(50,25));
+		this.fontSpinner.setValue(25);  //default size will be 25
+		this.fontSpinner.addChangeListener(new ChangeListener() {  // Anonymous class
+			
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				textArea.setFont(new Font(textArea.getFont().getFamily(),Font.PLAIN,(int)fontSpinner.getValue()));
+				
+			}
+		});
 		
-
+		
 		
 		//window (frame)
 		window.add(this.fontSelector);
 		window.add(this.fontBox);
 		window.add(this.color);
+		window.add(this.fontSize);
+		window.add(this.fontSpinner);
 		this.window.add(this.scrollPane);
 		this.window.setJMenuBar(this.menuBar);
 		this.window.validate(); 
