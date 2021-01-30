@@ -1,11 +1,10 @@
 import java.awt.event.*;
 import java.io.*;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
-import java.awt.Rectangle;
-
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -30,7 +29,7 @@ public class TextEditor implements ActionListener {
 	JMenuItem italic;
 	JLabel fontSelector;
 	JComboBox<String> fontBox;
-	String selectedText;
+	JButton color;
 	
 	public TextEditor() {
 		// creating the window of the text editor
@@ -112,9 +111,17 @@ public class TextEditor implements ActionListener {
 		this.fontSelector.setVisible(true);
 		this.fontBox.setVisible(true);
 		
+		// color selector
+		this.color =  new JButton("Font Color");
+		this.color.addActionListener(this);
+		
+		
+
+		
 		//window (frame)
 		window.add(this.fontSelector);
 		window.add(this.fontBox);
+		window.add(this.color);
 		this.window.add(this.scrollPane);
 		this.window.setJMenuBar(this.menuBar);
 		this.window.validate(); 
@@ -195,7 +202,11 @@ public class TextEditor implements ActionListener {
 		}
 		
 		
-		
+		//font color
+		if(e.getSource() == this.color) {
+			Color c = JColorChooser.showDialog(null,"Choose a color",Color.black);
+			textArea.setForeground(c);
+		}
 		//bold
 		if(e.getSource() == this.bold) {
 			textArea.setFont(new Font(textArea.getFont().getFamily(),Font.BOLD,textArea.getFont().getSize()));
