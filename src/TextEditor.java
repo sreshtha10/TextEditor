@@ -3,21 +3,22 @@ import java.io.*;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GraphicsEnvironment;
+import java.awt.Rectangle;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 
-
-
 public class TextEditor implements ActionListener {
-	
+
 	JTextArea textArea;
 	JFrame window;
 	JMenuBar menuBar;
 	JScrollPane scrollPane;
-	JMenu menu1 = new JMenu("File");  //File
-	JMenu menu2 = new JMenu("Theme");// Theme
+	JMenu file; //File
+	JMenu theme;// Theme
+	JMenu edit; // Edit
 	JMenuItem light;
 	JMenuItem dark;
 	JMenuItem classic;
@@ -25,20 +26,28 @@ public class TextEditor implements ActionListener {
 	JMenuItem open;
 	JMenuItem saveAs;
 	JMenuItem exit;
+	JMenuItem bold;
+	JMenuItem italic;
+	JMenuItem underLine;
+	JLabel fontSelector;
+	JComboBox<String> fontBox;
+	String selectedText;
+	
 	public TextEditor() {
 		// creating the window of the text editor
 		
 		this.window = new JFrame();
 		this.window.setLayout(new FlowLayout());
 		this.window.setTitle("Text Editor");
-		this.window.setSize(600,600);
+		this.window.setSize(600,650);
 		this.window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		  
 		
 		//Menu - File, Theme, Color, Font
 		this.menuBar = new JMenuBar();
-		this.menu1 = new JMenu("File");  //File
-		this.menu2 = new JMenu("Theme");  // Theme
+		this.file = new JMenu("File");  //File
+		this.theme = new JMenu("Theme");  // Theme
+		this.edit = new JMenu("Edit");
 		this.light = new JMenuItem("Light");
 		this.dark = new JMenuItem("Dark");
 		this.classic = new JMenuItem("Classic");
@@ -46,16 +55,22 @@ public class TextEditor implements ActionListener {
 		this.open = new JMenuItem("Open");
 		this.saveAs = new JMenuItem("Save As");
 		this.exit = new JMenuItem("Exit");
-		this.menu1.add(this.open);
-		this.menu1.add(this.saveAs);
-		this.menu1.add(this.exit);
-		this.menu2.add(this.light);
-		this.menu2.add(this.dark);
-		this.menu2.add(this.classic);
-		this.menu2.add(this.def);
-		
-		this.menuBar.add(menu1);	
-		this.menuBar.add(menu2);
+		this.bold = new JMenuItem("Bold");
+		this.underLine = new JMenuItem("Underline");
+		this.italic  = new JMenuItem("Italic");
+		this.file.add(this.open);
+		this.file.add(this.saveAs);
+		this.file.add(this.exit);
+		this.theme.add(this.light);
+		this.theme.add(this.dark);
+		this.theme.add(this.classic);
+		this.theme.add(this.def);
+		this.edit.add(this.bold);
+		this.edit.add(this.italic);
+		this.edit.add(this.underLine);
+		this.menuBar.add(file);	
+		this.menuBar.add(theme);
+		this.menuBar.add(edit);
 		this.menuBar.setVisible(true);
 		
 		this.exit.addActionListener(this);
@@ -65,10 +80,13 @@ public class TextEditor implements ActionListener {
 		this.light.addActionListener(this);
 		this.classic.addActionListener(this);
 		this.def.addActionListener(this);
-		
+		this.bold.addActionListener(this);
+		this.underLine.addActionListener(this);
+		this.italic.addActionListener(this);
 		//end of menu bar
 		
 		//textArea
+		
 		this.textArea = new JTextArea();
 		this.textArea.setPreferredSize(new Dimension(570,530));
 		this.textArea.setLineWrap(true);
@@ -77,7 +95,7 @@ public class TextEditor implements ActionListener {
 		//end of textArea
 		
 		//setting up default font and size
-		this.textArea.setFont(new Font("Arial",Font.PLAIN,25));
+		this.textArea.setFont(new Font("Times New Roman",Font.PLAIN,25));
 		
 		//scrollPane
 		this.scrollPane = new JScrollPane(this.textArea);
@@ -85,8 +103,22 @@ public class TextEditor implements ActionListener {
 		this.scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		this.scrollPane.setVisible(true);
 		//end of scrollPane
-
+		
+		
+		//font selector
+		this.fontSelector = new JLabel("Font :",JLabel.LEFT);
+		this.fontSelector.setPreferredSize(new Dimension(35,20));
+		String allFonts[] = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
+		this.fontBox = new JComboBox<String>(allFonts);
+		this.fontBox.addActionListener(this);
+		this.fontBox.setSelectedItem("Times New Roman");
+		this.fontBox.setPreferredSize(new Dimension(120,25));
+		this.fontSelector.setVisible(true);
+		this.fontBox.setVisible(true);
+		
 		//window (frame)
+		window.add(this.fontSelector);
+		window.add(this.fontBox);
 		this.window.add(this.scrollPane);
 		this.window.setJMenuBar(this.menuBar);
 		this.window.validate(); 
@@ -161,6 +193,35 @@ public class TextEditor implements ActionListener {
 		}
 		
 		
+		//fontBox 
+		if(e.getSource() == this.fontBox) {
+			textArea.setFont(new Font((String)fontBox.getSelectedItem(),Font.PLAIN,25));
+		}
+		
+		
+		
+		//bold
+		if(e.getSource() == this.bold) {
+			
+			
+		}
+		
+		
+		//italic
+		if(e.getSource() == this.italic) {
+			
+			
+		}
+		
+		//underline
+		if(e.getSource() == this.underLine) {
+			
+			
+			
+		}
+	
+		
+		//themes
 		if(e.getSource() == this.dark) {
 			try {
 				UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
