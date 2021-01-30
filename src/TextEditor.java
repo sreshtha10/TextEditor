@@ -20,6 +20,7 @@ public class TextEditor implements ActionListener {
 	JMenu file; //File
 	JMenu theme;// Theme
 	JMenu edit; // Edit
+	JButton about; // about
 	JMenuItem light;
 	JMenuItem dark;
 	JMenuItem classic;
@@ -49,11 +50,15 @@ public class TextEditor implements ActionListener {
 		this.window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		  
 		
-		//Menu - File, Theme, Color, Font
+		//Menu - File, Edit, Theme, About
 		this.menuBar = new JMenuBar();
 		this.file = new JMenu("File");  //File
 		this.theme = new JMenu("Theme");  // Theme
-		this.edit = new JMenu("Edit");
+		this.edit = new JMenu("Edit"); // Edit
+		this.about = new JButton("About"); // About
+		this.about.setBorderPainted(false);
+		this.about.setContentAreaFilled(false);;
+		//Menu Items
 		this.light = new JMenuItem("Light");
 		this.dark = new JMenuItem("Dark");
 		this.classic = new JMenuItem("Classic");
@@ -63,6 +68,8 @@ public class TextEditor implements ActionListener {
 		this.exit = new JMenuItem("Exit");
 		this.bold = new JMenuItem("Bold");
 		this.italic  = new JMenuItem("Italic");
+		
+		//adding all the menuItems to menu
 		this.file.add(this.open);
 		this.file.add(this.saveAs);
 		this.file.add(this.exit);
@@ -72,11 +79,16 @@ public class TextEditor implements ActionListener {
 		this.theme.add(this.def);
 		this.edit.add(this.bold);
 		this.edit.add(this.italic);
+		
+		//adding all menus to menuBar
 		this.menuBar.add(file);	
 		this.menuBar.add(theme);
 		this.menuBar.add(edit);
+		this.menuBar.add(about);
 		this.menuBar.setVisible(true);
 		
+		
+		this.about.addActionListener(this);
 		this.exit.addActionListener(this);
 		this.open.addActionListener(this);
 		this.saveAs.addActionListener(this);
@@ -236,6 +248,7 @@ public class TextEditor implements ActionListener {
 		}
 		
 		
+		
 		//fontBox 
 		if(e.getSource() == this.fontBox) {
 			textArea.setFont(new Font((String)fontBox.getSelectedItem(),Font.PLAIN,25));
@@ -301,6 +314,13 @@ public class TextEditor implements ActionListener {
 			}
 		}
 		
+		
+		//About
+		
+		if(e.getSource() == this.about) {
+			JOptionPane.showMessageDialog(this.window,"Created by Sreshtha Mehrotra \nGithub link: www.github.com/sreshtha10 ");
+			
+		}
 		
 	}
 }
