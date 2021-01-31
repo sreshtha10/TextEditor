@@ -5,10 +5,14 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
+import java.awt.PopupMenu;
+
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.text.DefaultEditorKit;
+import javax.swing.text.TextAction;
 
 
 public class TextEditor implements ActionListener {
@@ -43,7 +47,7 @@ public class TextEditor implements ActionListener {
 		
 		this.window = new JFrame();
 		FlowLayout layout  = new FlowLayout();
-		layout.setHgap(20);
+		layout.setHgap(15);
 		this.window.setLayout(layout);
 		this.window.setTitle("Text Editor");
 		this.window.setSize(600,650);
@@ -68,6 +72,7 @@ public class TextEditor implements ActionListener {
 		this.exit = new JMenuItem("Exit");
 		this.bold = new JMenuItem("Bold");
 		this.italic  = new JMenuItem("Italic");
+
 		
 		//adding all the menuItems to menu
 		this.file.add(this.open);
@@ -165,7 +170,10 @@ public class TextEditor implements ActionListener {
 		this.saveAs.setAccelerator(saveStroke);
 		
 		
-		
+		//cut copy paste
+		addAction(new DefaultEditorKit.CutAction(), KeyEvent.VK_X, "Cut" );
+	    addAction(new DefaultEditorKit.CopyAction(), KeyEvent.VK_C, "Copy" );
+	    addAction(new DefaultEditorKit.PasteAction(), KeyEvent.VK_V, "Paste" );
 		
 		
 		//window (frame)
@@ -316,11 +324,17 @@ public class TextEditor implements ActionListener {
 		
 		
 		//About
-		
 		if(e.getSource() == this.about) {
 			JOptionPane.showMessageDialog(this.window,"Created by Sreshtha Mehrotra \nGithub link: www.github.com/sreshtha10 ");
 			
 		}
 		
 	}
+	
+	// Method to add cut copy paste feature.
+	private void addAction(TextAction action, int key, String text) {
+	      action.putValue(AbstractAction.ACCELERATOR_KEY,KeyStroke.getKeyStroke(key, InputEvent.CTRL_DOWN_MASK));
+	      action.putValue(AbstractAction.NAME, text);
+	      this.edit.add(new JMenuItem(action));
+	  }
 }
