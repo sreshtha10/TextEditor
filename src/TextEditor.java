@@ -13,10 +13,12 @@ import javax.swing.text.DefaultEditorKit;
 import javax.swing.text.TextAction;
 
 
-public class TextEditor implements ActionListener {
+//inheritance (interface)
+public class TextEditor implements ActionListener,Runnable {
 
+	//class variables
 	JTextArea textArea;
-	JFrame window;
+	private final JFrame window; 
 	JMenuBar menuBar;
 	JScrollPane scrollPane;
 	JMenu file; //File
@@ -39,11 +41,14 @@ public class TextEditor implements ActionListener {
 	JSpinner fontSpinner;
 	
 	
-	
+	//constructor
 	public TextEditor() {
 		// creating the window of the text editor
-		
+	
 		this.window = new JFrame();
+		ImageIcon icon = new ImageIcon("C:\\Users\\sresh\\Downloads\\icon.png");
+		this.window.setIconImage(icon.getImage());
+		this.window.setResizable(false);  // fixed size of the frame (window)
 		FlowLayout layout  = new FlowLayout();
 		layout.setHgap(15);
 		this.window.setLayout(layout);
@@ -106,7 +111,6 @@ public class TextEditor implements ActionListener {
 		//textArea
 		
 		this.textArea = new JTextArea();
-		this.textArea.setPreferredSize(new Dimension(570,530));
 		this.textArea.setLineWrap(true);
 		this.textArea.setWrapStyleWord(true);
 		this.textArea.setVisible(true); 
@@ -119,7 +123,7 @@ public class TextEditor implements ActionListener {
 		this.scrollPane = new JScrollPane(this.textArea);
 		this.scrollPane.setPreferredSize(new Dimension(570,530));
 		this.scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		this.scrollPane.setVisible(true);
+
 		//end of scrollPane
 		
 		
@@ -145,6 +149,7 @@ public class TextEditor implements ActionListener {
 		this.fontSpinner.setValue(25);  //default size will be 25
 		this.fontSpinner.addChangeListener(new ChangeListener() {  // Anonymous class
 			
+			//changing the font size in the textArea whenever size is change in the fontSpinner
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				textArea.setFont(new Font(textArea.getFont().getFamily(),Font.PLAIN,(int)fontSpinner.getValue()));
@@ -180,9 +185,9 @@ public class TextEditor implements ActionListener {
 		window.add(this.color);
 		window.add(this.fontSize);
 		window.add(this.fontSpinner);
-		this.window.add(this.scrollPane);
 		this.window.setJMenuBar(this.menuBar);
-		this.window.validate(); 
+		this.window.add(this.scrollPane);
+		this.window.validate();  // validating the sub components of the container (window)
 		this.window.setVisible(true);
 		this.window.setLocationRelativeTo(null);  // centering the window.
 		
@@ -191,11 +196,14 @@ public class TextEditor implements ActionListener {
 		
 		
 	}
-
+	
+	
+	//adding functionality to the text editor 
+  
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-		//Opening a file
+		//Opening a file (File Handling)
 		if(e.getSource() == this.open) {
 			JFileChooser fChooser = new JFileChooser();
 			fChooser.setCurrentDirectory(new File("."));
@@ -226,11 +234,12 @@ public class TextEditor implements ActionListener {
 		
 		//exiting the program from menu bar.
 		if(e.getSource() == this.exit) {
+			System.gc();
 			System.exit(0);
 		}
 		
 		
-		//save as
+		//save as  (File handling)
 		if(e.getSource() == this.saveAs) {
 			JFileChooser fChooser = new JFileChooser();
 			fChooser.setCurrentDirectory(new File("."));
@@ -321,7 +330,7 @@ public class TextEditor implements ActionListener {
 		}
 		
 		
-		//About
+		//About 
 		if(e.getSource() == this.about) {
 			JOptionPane.showMessageDialog(this.window,"Created by Sreshtha Mehrotra \nGithub link: www.github.com/sreshtha10 ");
 			
@@ -329,10 +338,47 @@ public class TextEditor implements ActionListener {
 		
 	}
 	
-	// Method to add cut copy paste feature.
+	
+	// Method to add cut copy paste feature. 
 	private void addAction(TextAction action, int key, String text) {
 	      action.putValue(AbstractAction.ACCELERATOR_KEY,KeyStroke.getKeyStroke(key, InputEvent.CTRL_DOWN_MASK));
 	      action.putValue(AbstractAction.NAME, text);
 	      this.edit.add(new JMenuItem(action));
 	  }
+	
+	//Encapsulation
+	
+	public void setDefaultFontSize() {
+		
+	}
+	
+	
+	
+	public void setDefaultFontFamily() {
+		
+		
+	}
+	
+	
+	
+	@Override
+	protected void finalize() throws Throwable {
+		try {
+			System.out.println("Finalizing");
+		}
+		catch(Throwable e) {
+			System.out.println("Error occured !");
+		}
+		
+	}
+
+
+	@Override
+	public void run() {
+		System.out.println("Thread name " +Thread.currentThread().getName());
+		System.out.println("Thread priority "+Thread.currentThread().getPriority());	
+	}
+
+	
+	
 }
