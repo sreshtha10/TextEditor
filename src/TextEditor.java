@@ -34,6 +34,7 @@ public class TextEditor implements ActionListener,Runnable {
 	JMenuItem exit;
 	JMenuItem bold;
 	JMenuItem italic;
+	JMenuItem currThread;
 	JLabel fontSelector;
 	JComboBox<String> fontBox;
 	JButton color;
@@ -75,12 +76,13 @@ public class TextEditor implements ActionListener,Runnable {
 		this.exit = new JMenuItem("Exit");
 		this.bold = new JMenuItem("Bold");
 		this.italic  = new JMenuItem("Italic");
-
+		this.currThread = new JMenuItem("Thread info");
 		
 		//adding all the menuItems to menu
 		this.file.add(this.open);
 		this.file.add(this.saveAs);
 		this.file.add(this.exit);
+		this.file.add(currThread);
 		this.theme.add(this.light);
 		this.theme.add(this.dark);
 		this.theme.add(this.classic);
@@ -106,6 +108,7 @@ public class TextEditor implements ActionListener,Runnable {
 		this.def.addActionListener(this);
 		this.bold.addActionListener(this);
 		this.italic.addActionListener(this);
+		this.currThread.addActionListener(this);
 		//end of menu bar
 		
 		//textArea
@@ -336,6 +339,10 @@ public class TextEditor implements ActionListener,Runnable {
 			
 		}
 		
+		
+		if(e.getSource() == this.currThread) {
+			JOptionPane.showMessageDialog(this.window,"Current thread"+Thread.currentThread().getName()+"\nCurrent Thread Priority :"+Thread.currentThread().getPriority());
+		}
 	}
 	
 	
@@ -344,22 +351,7 @@ public class TextEditor implements ActionListener,Runnable {
 	      action.putValue(AbstractAction.ACCELERATOR_KEY,KeyStroke.getKeyStroke(key, InputEvent.CTRL_DOWN_MASK));
 	      action.putValue(AbstractAction.NAME, text);
 	      this.edit.add(new JMenuItem(action));
-	  }
-	
-	//Encapsulation
-	
-	public void setDefaultFontSize() {
-		
-	}
-	
-	
-	
-	public void setDefaultFontFamily() {
-		
-		
-	}
-	
-	
+	  }	
 	
 	@Override
 	protected void finalize() throws Throwable {
@@ -375,8 +367,7 @@ public class TextEditor implements ActionListener,Runnable {
 
 	@Override
 	public void run() {
-		System.out.println("Thread name " +Thread.currentThread().getName());
-		System.out.println("Thread priority "+Thread.currentThread().getPriority());	
+		
 	}
 
 	
