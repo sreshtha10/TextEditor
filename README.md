@@ -1,2 +1,2 @@
 # TextEditor
-Text editor using Java
+Text editor created using Java
